@@ -1,0 +1,47 @@
+Login = import validator from "validator";
+
+export default class Login {
+  constructor(formClass) {
+    this.form = document.querySelector(formClass);
+  }
+
+  init() {
+    this.events();
+  }
+
+  events() {
+    if(!this.form) return;
+    this.form.addEventListener('submit', e => {
+      e.preventDefault();
+      this.validate(e);
+    });
+  }
+
+  validate(e) {
+    const el = e.target;
+    const emailInput = el.document.querySelector('input[name="email"]');
+    const passwordInput = el.document.querySelector('input[name="password"]');
+    const divMessage = documento.querySelector('divMessage');
+    let error = false;
+
+    if(!validator.isEmail(emailInput.value)) {
+      divMessage.innerHTML = 'E-mail inválido';
+      error = true;
+    }
+
+    if(passwordInput.value.length < 3 || passwordInput.value.length > 50) {
+      divMessage.innerHTML = 'Senha precisa ter entre 3 e 50 caracteres';
+      error = true;
+    }
+
+    if(!error) el.submit();
+  }
+}
+
+Main no front end = import Login from './modules/Login'
+
+const login = new Login('form-login');
+const cadastro = new Login('form-cadastro');
+
+login.init();
+cadastro.init();
